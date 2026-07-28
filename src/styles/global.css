@@ -1,1 +1,756 @@
+/* ===== Base & Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-bg: #f5f5f7;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-border: #e5e5e7;
+  --color-text: #1a1a1a;
+  --color-text-secondary: #555555;
+  --color-text-muted: #888888;
+  --color-accent: #0071e3;
+  --color-danger: #ff3b30;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== App Layout ===== */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-left h1 {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--color-text);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.export-btn:hover {
+  background: #333;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== Device Toggle ===== */
+.device-toggle {
+  display: flex;
+  gap: 2px;
+  background: var(--color-bg);
+  padding: 3px;
+  border-radius: var(--radius-md);
+}
+
+.device-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: all var(--transition-fast);
+}
+
+.device-btn.active {
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
+
+.device-btn:hover:not(.active) {
+  color: var(--color-text-secondary);
+}
+
+/* ===== Split Layout ===== */
+.split-layout {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  overflow: hidden;
+}
+
+.editor-panel {
+  flex: 0 0 400px;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-right: 1px solid var(--color-border);
+}
+
+.editor-panel::-webkit-scrollbar {
+  width: 5px;
+}
+
+.editor-panel::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 10px;
+}
+
+.preview-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px;
+  background: #e8e8ed;
+  overflow-y: auto;
+}
+
+/* ===== Editor Cards ===== */
+.editor-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-normal);
+}
+
+.editor-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.editor-card h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text);
+}
+
+/* ===== Form Elements ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.input-with-icon:focus-within {
+  border-color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.input-with-icon svg {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.input-with-icon input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+  color: var(--color-text);
+  font-family: inherit;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 8px 10px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  color: var(--color-text);
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+.input-hint {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* ===== Template Selector ===== */
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.template-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 8px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.template-card:hover {
+  border-color: var(--color-text-secondary);
+}
+
+.template-card.active {
+  border-color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.template-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.template-desc {
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+/* ===== List Items (Experience/Education) ===== */
+.list-item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.list-item:hover {
+  border-color: var(--color-text-secondary);
+}
+
+.list-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  cursor: pointer;
+  background: var(--color-surface-raised);
+}
+
+.list-item-title {
+  font-size: 13px;
+  font-weight: 500;
+  display: block;
+}
+
+.list-item-subtitle {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.list-item-actions {
+  color: var(--color-text-muted);
+}
+
+.list-item-body {
+  padding: 14px;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.add-btn:hover {
+  border-color: var(--color-text-secondary);
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+}
+
+.remove-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-danger);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.remove-btn:hover {
+  background: rgba(255, 59, 48, 0.06);
+  border-color: var(--color-danger);
+}
+
+/* ===== Skills Preview ===== */
+.skills-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.skill-chip {
+  padding: 4px 10px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+/* ===== Resume Page ===== */
+.preview-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.resume-page {
+  background: white;
+  width: 100%;
+  max-width: 210mm;
+  min-height: 297mm;
+  padding: 40px;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.4s ease;
+  transform-origin: top center;
+}
+
+.resume-page.tablet {
+  max-width: 160mm;
+  padding: 30px;
+}
+
+.resume-page.mobile {
+  max-width: 100mm;
+  padding: 20px;
+}
+
+/* ===== Classic Template ===== */
+.template-classic .resume-header {
+  text-align: center;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--color-text);
+}
+
+.template-classic .resume-header h1 {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.template-classic .job-title {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: 10px;
+}
+
+.template-classic .contact-line {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.template-classic .resume-section {
+  margin-bottom: 24px;
+}
+
+.template-classic .resume-section h2 {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.template-classic .resume-section p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.template-classic .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3px;
+}
+
+.template-classic .item-header h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.template-classic .date {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.template-classic .company,
+.template-classic .school {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+
+.template-classic .description {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.template-classic .skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.template-classic .skill-tag {
+  background: #f0f0f0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+/* ===== Modern Template ===== */
+.template-modern {
+  color: #1a1a2e;
+}
+
+.template-modern .resume-header {
+  position: relative;
+  padding: 24px 0;
+  margin-bottom: 28px;
+}
+
+.template-modern .accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #e94560;
+  transform-origin: left;
+}
+
+.template-modern .resume-header h1 {
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.template-modern .job-title {
+  font-size: 16px;
+  color: #e94560;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.template-modern .contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 20px;
+  font-size: 12px;
+  color: #666;
+}
+
+.template-modern .resume-section {
+  margin-bottom: 26px;
+}
+
+.template-modern .resume-section h2 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e94560;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.template-modern .resume-section p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #555;
+}
+
+.template-modern .experience-item,
+.template-modern .education-item {
+  margin-bottom: 16px;
+  padding-left: 16px;
+  border-left: 2px solid #e94560;
+}
+
+.template-modern .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.template-modern .item-header h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.template-modern .date-badge {
+  background: #f0f0f0;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #666;
+}
+
+.template-modern .company,
+.template-modern .school {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.template-modern .description {
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #666;
+}
+
+.template-modern .skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.template-modern .skill-pill {
+  background: #1a1a2e;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ===== Minimal Template ===== */
+.template-minimal .resume-header {
+  margin-bottom: 28px;
+}
+
+.template-minimal .resume-header h1 {
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.template-minimal .job-title {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: 10px;
+}
+
+.template-minimal .contact-minimal {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.template-minimal .resume-section {
+  margin-bottom: 24px;
+}
+
+.template-minimal .resume-section h2 {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+
+.template-minimal .resume-section p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.template-minimal .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+
+.template-minimal .item-header h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.template-minimal .date {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.template-minimal .company,
+.template-minimal .school {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+
+.template-minimal .description {
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.template-minimal .skills-inline {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+
+/* ===== Mobile Tabs ===== */
+.mobile-tabs {
+  display: none;
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  gap: 8px;
+}
+
+.mobile-tabs button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+}
+
+.mobile-tabs button.active {
+  background: var(--color-text);
+  color: white;
+}
